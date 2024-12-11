@@ -1,0 +1,102 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multimodal AI App</title>
+    <style>
+        /* Simple styling for better UX */
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .input-section { margin-bottom: 20px; }
+        .response-section { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Multimodal AI App</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="input-section">
+            <label for="input_type">Select Input Type:</label>
+            <select name="input_type" id="input_type">
+                <option value="">--Select--</option>
+                <option value="text">Text Query</option>
+                <option value="image">Image Upload</option>
+                <option value="youtube">YouTube Summarization</option>
+                <option value="generate_image">Generate Image from Prompt</option>
+            </select>
+        </div>
+
+        <!-- Text Query -->
+        <div id="text_input" style="display:none;" class="input-section">
+            <label for="text_input_field">Enter your query:</label>
+            <input type="text" name="text_input" id="text_input_field" style="width:100%;">
+        </div>
+
+        <!-- Image Upload -->
+        <div id="image_input" style="display:none;" class="input-section">
+            <label for="image_input_field">Upload an image:</label>
+            <input type="file" name="image_input" id="image_input_field">
+        </div>
+
+        <!-- YouTube Summarization -->
+        <div id="youtube_input" style="display:none;" class="input-section">
+            <label for="youtube_input_field">Enter YouTube URL:</label>
+            <input type="text" name="youtube_input" id="youtube_input_field" style="width:100%;">
+        </div>
+
+        <!-- Generate Image from Prompt -->
+        <div id="image_prompt_input" style="display:none;" class="input-section">
+            <label for="image_prompt_field">Enter image prompt:</label>
+            <input type="text" name="image_prompt" id="image_prompt_field" style="width:100%;">
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="response-section">
+        {% if response %}
+            <h2>Response:</h2>
+            <p>{{ response }}</p>
+        {% endif %}
+
+        {% if image_url %}
+            <h2>Uploaded/Generated Image:</h2>
+            <img src="{{ image_url }}" alt="Image" style="max-width:500px;">
+        {% endif %}
+
+        {% if summary %}
+            <h2>YouTube Video Summary:</h2>
+            <p>{{ summary }}</p>
+        {% endif %}
+
+        {% if error %}
+            <h2>Error:</h2>
+            <p style="color:red;">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        const inputType = document.getElementById('input_type');
+        const textInput = document.getElementById('text_input');
+        const imageInput = document.getElementById('image_input');
+        const youtubeInput = document.getElementById('youtube_input');
+        const imagePromptInput = document.getElementById('image_prompt_input');
+
+        inputType.addEventListener('change', function() {
+            textInput.style.display = 'none';
+            imageInput.style.display = 'none';
+            youtubeInput.style.display = 'none';
+            imagePromptInput.style.display = 'none';
+
+            if (this.value === 'text') {
+                textInput.style.display = 'block';
+            } else if (this.value === 'image') {
+                imageInput.style.display = 'block';
+            } else if (this.value === 'youtube') {
+                youtubeInput.style.display = 'block';
+            } else if (this.value === 'generate_image') {
+                imagePromptInput.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
