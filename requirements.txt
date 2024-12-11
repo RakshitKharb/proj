@@ -54,3 +54,4 @@ typing_extensions==4.12.2
 tzdata==2024.2
 urllib3==2.2.3
 watchdog==6.0.0
+yt-dlp==2024.12.6
